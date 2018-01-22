@@ -21,41 +21,74 @@
 #include <string>
 #include <vector>
 
-enum class istream_mode { term, file, pipe };
-enum class ostream_mode { term, file, append, pipe };
-enum class next_command_mode { any, success, fail };
+/// Input stream mode for a command.
+enum class istream_mode {
+    term, ///< From the terminal.
+    file, ///< From a file.
+    pipe  ///< From the previous command.
+};
 
+/// Output stream mode for a command.
+enum class ostream_mode {
+    term,   ///< To the terminal.
+    file,   ///< To a file.
+    append, ///< To a file (append).
+    pipe    ///< To the next command.
+};
+
+/// Execution of the next command.
+enum class next_command_mode {
+    any,     ///< Execute unconditionally.
+    success, ///< Execute if the current command returns zero.
+    fail     ///< Execute if the current command returns nonzero.
+};
+
+/// A single shell command.
 struct shell_command {
+    /// Name of the command (e.g., echo, ls, cat).
     std::string cmd;
+
+    /// Arguments following the command name.
     std::vector<std::string> args;
 
+    /// Input stream mode.
     istream_mode cin_mode = istream_mode::term;
+
+    /// Input stream filename (if applicable).
     std::string cin_file;
 
+    /// Output stream mode.
     ostream_mode cout_mode = ostream_mode::term;
+
+    /// Output stream filename (if applicable).
     std::string cout_file;
 
+    /// Condition of the next command execution.
     next_command_mode next_mode = next_command_mode::any;
 };
 
+/// Pretty-prints istream_mode.
 inline std::ostream& operator<<(std::ostream& os, const istream_mode& x)
 {
     const char* text[] = {"term", "file", "pipe"};
     return os << text[static_cast<size_t>(x)];
 }
 
+/// Pretty-prints ostream_mode.
 inline std::ostream& operator<<(std::ostream& os, const ostream_mode& x)
 {
     const char* text[] = {"term", "file", "append", "pipe"};
     return os << text[static_cast<size_t>(x)];
 }
 
+/// Pretty-prints next_command_mode.
 inline std::ostream& operator<<(std::ostream& os, const next_command_mode& x)
 {
     const char* text[] = {"any", "success", "fail"};
     return os << text[static_cast<size_t>(x)];
 }
 
+/// Pretty-prints a single command.
 inline std::ostream& operator<<(std::ostream& os, const shell_command& x)
 {
     os << "cmd: " << x.cmd << "\n";
