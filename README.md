@@ -8,12 +8,13 @@ README.txt.
 
 ## 1 Usage
 
-Read main.cpp (usage) and commands.hpp (data structure).
+Read [main.cpp](main.cpp) (usage) and [command.hpp](command.hpp) (data
+structure).
 
 ### 1.1 Parsing
 
 `parse_command_string()` returns a vector of parsed commands (defined in
-commands.hpp) from a line of text input from the terminal.
+[command.hpp](command.hpp)) from a line of text input from the terminal.
 
 ```cpp
 // 1. Get a line from the terminal.
