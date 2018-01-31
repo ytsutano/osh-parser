@@ -11,7 +11,18 @@ README.txt.
 Read [main.cpp](main.cpp) (usage) and [command.hpp](command.hpp) (data
 structure).
 
-### 1.1 Parsing
+### 1.1 Compiling & Running on CSE
+
+You can run the following four commands to compile and run on cse.unl.edu:
+
+```sh
+git clone https://github.com/ytsutano/osh-parser.git
+cd osh-parser
+make
+./osh
+```
+
+### 1.2 Parsing
 
 `parse_command_string()` returns a vector of parsed commands (defined in
 [command.hpp](command.hpp)) from a line of text input from the terminal.
@@ -27,7 +38,7 @@ std::vector<shell_command> shell_commands = parse_command_string(input_line);
 This is basically all you need to do for parsing. You just need to execute the
 commands listed in `shell_commands` vector to implement the assignment.
 
-### 1.2 Printing the Parsed Commands
+### 1.3 Printing the Parsed Commands
 
 It is helpful to print the parsed commands when implementing the execution part
 of the shell. You can do so with the following code:
