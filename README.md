@@ -79,3 +79,47 @@ cout_mode: file
 next_mode: any
 -------------------------
 ```
+
+## 2 Hints
+
+### 2.1 Using `execvp()` with C++ Types
+
+Our `shell_command` struct is defined as follows:
+
+```cpp
+struct shell_command {
+    std::string cmd;
+    std::vector<std::string> args;
+
+    // ...
+};
+```
+
+At some point, you need to replace the current process with a new process image
+based on `cmd` and `args` by calling `execvp()`. Because `execvp()` takes
+
+- `const char*` and
+- a null-terminated array of C strings
+
+instead of
+
+- `std::string` and
+- `std::vector<std::string>`,
+
+we need to do a simple conversion. You can use the following helper function to
+pass `cmd` and `args` directly:
+
+```cpp
+int exec(const std::string& cmd, const std::vector<std::string>& args)
+{
+    // Make an ugly C-style args array.
+    std::vector<char*> c_args = {const_cast<char*>(cmd.c_str())};
+    for (const auto& a : args) {
+        c_args.push_back(const_cast<char*>(a.c_str()));
+    }
+    c_args.push_back(nullptr);
+
+    return execvp(cmd.c_str(), c_args.data());
+}
+```
+
