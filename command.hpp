@@ -38,9 +38,9 @@ enum class ostream_mode {
 
 /// Execution of the next command.
 enum class next_command_mode {
-    any,     ///< Execute unconditionally.
-    success, ///< Execute if the current command returns zero.
-    fail     ///< Execute if the current command returns nonzero.
+    always,     ///< Execute unconditionally.
+    on_success, ///< Execute if the current command returns zero.
+    on_fail     ///< Execute if the current command returns nonzero.
 };
 
 /// A single shell command.
@@ -64,7 +64,7 @@ struct shell_command {
     std::string cout_file;
 
     /// Condition of the next command execution.
-    next_command_mode next_mode = next_command_mode::any;
+    next_command_mode next_mode = next_command_mode::always;
 };
 
 /// Pretty-prints istream_mode.
@@ -84,7 +84,7 @@ inline std::ostream& operator<<(std::ostream& os, const ostream_mode& x)
 /// Pretty-prints next_command_mode.
 inline std::ostream& operator<<(std::ostream& os, const next_command_mode& x)
 {
-    const char* text[] = {"any", "success", "fail"};
+    const char* text[] = {"always", "on_success", "on_fail"};
     return os << text[static_cast<size_t>(x)];
 }
 

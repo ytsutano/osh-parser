@@ -109,13 +109,13 @@ std::vector<shell_command> parse_command_string(const std::string& str)
                 break;
 
             case shell_token_type::logical_and:
-                commands.back().next_mode = next_command_mode::success;
+                commands.back().next_mode = next_command_mode::on_success;
                 commands.emplace_back();
                 state = parser_state::need_new_command;
                 break;
 
             case shell_token_type::logical_or:
-                commands.back().next_mode = next_command_mode::fail;
+                commands.back().next_mode = next_command_mode::on_fail;
                 commands.emplace_back();
                 state = parser_state::need_new_command;
                 break;

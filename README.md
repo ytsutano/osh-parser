@@ -62,21 +62,21 @@ cin_file:
 cin_mode: term
 cout_file:
 cout_mode: pipe
-next_mode: any
+next_mode: always
 -------------------------
 cmd: sort
 cin_file:
 cin_mode: pipe
 cout_file:
 cout_mode: pipe
-next_mode: any
+next_mode: always
 -------------------------
 cmd: uniq
 cin_file:
 cin_mode: pipe
 cout_file: test.txt
 cout_mode: file
-next_mode: any
+next_mode: always
 -------------------------
 ```
 
