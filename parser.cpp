@@ -84,6 +84,9 @@ std::vector<shell_command> parse_command_string(const std::string& str)
                 break;
 
             case shell_token_type::redirect_cin:
+                if (commands.back().cin_mode == istream_mode::pipe) {
+                    throw parsing_error("Ambiguous input redirect");
+                }
                 commands.back().cin_mode = istream_mode::file;
                 state = parser_state::need_in_path;
                 break;
